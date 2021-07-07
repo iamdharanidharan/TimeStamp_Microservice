@@ -35,7 +35,7 @@ app.get("/api/:date?", (req, res)=>{
   if(fDate == "Invalid Date"){
     res.status(200).json({ error : "Invalid Date" });
   } else {
-    res.status(200).json({unix : fDate.getTime(), UTC : fDate.toUTCString()});
+    res.status(200).json({unix : fDate.getTime(), utc : fDate.toUTCString()});
   }
 });
 
