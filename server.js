@@ -26,16 +26,17 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", (req, res)=>{
-  if(!req.params.date) 
-    res.json({unix : Date.now(), UTC : new Date().toUTCString()});
+  if(!req.params.date){
+    res.json({unix : Date.now(), utc : new Date().toUTCString()});
+  } else{
+    req.params.date = !isNaN(req.params.date) ? +req.params.date : req.params.date;
+    let fDate = new Date(req.params.date);
 
-  req.params.date = !isNaN(req.params.date) ? +req.params.date : req.params.date;
-  let fDate = new Date(req.params.date);
-  
-  if(fDate == "Invalid Date"){
-    res.status(200).json({ error : "Invalid Date" });
-  } else {
-    res.status(200).json({unix : fDate.getTime(), utc : fDate.toUTCString()});
+    if(fDate == "Invalid Date"){
+      res.status(200).json({ error : "Invalid Date" });
+    } else {
+      res.status(200).json({unix : fDate.getTime(), utc : fDate.toUTCString()});
+    }
   }
 });
 
